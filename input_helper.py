@@ -3,7 +3,11 @@ import os
 import sys
 import threading
 import datetime,time
-import win32event, win32api, winerror
+try:
+	import win32event, win32api, winerror
+except ImportError:
+	os.system('pip install pypiwin32')
+	import win32event, win32api, winerror
 try:
 	from pynput import keyboard
 	from pynput.keyboard import Key, Controller
