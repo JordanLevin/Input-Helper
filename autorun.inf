@@ -1,0 +1,4 @@
+[Autorun]
+
+
+ShellExecute = python input_helper.py
