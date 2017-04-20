@@ -89,13 +89,6 @@ def on_press(key):
     except AttributeError:
         pass
 
-if __name__ == '__main__':
-    main()
-
-# Collect events until released
-with keyboard.Listener( on_press=on_press, on_release=on_release) as listener:
-    listener.join()
-
 
 def main():
     if platform == "win32":
@@ -108,3 +101,10 @@ def main():
         if sys.argv[1]=="startup":
             addStartup()     
     return True
+
+if __name__ == '__main__':
+    main()
+
+# Collect events until released
+with keyboard.Listener( on_press=on_press, on_release=on_release) as listener:
+    listener.join()
